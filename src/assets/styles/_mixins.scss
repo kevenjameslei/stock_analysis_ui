@@ -1,0 +1,151 @@
+// 弹性布局快捷方式
+@mixin flex-center($direction: row, $justify: center, $align: center) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// 绝对定位快捷方式
+@mixin absolute-position($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+// 文本截断处理
+@mixin text-truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// 按钮状态变体生成器
+@mixin button-variant($bg-color, $text-color, $hover-bg) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: 1px solid darken($bg-color, 5%);
+
+  &:hover:not(:disabled) {
+    background-color: $hover-bg;
+    border-color: darken($hover-bg, 8%);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// 加载旋转动画
+@mixin loading-spinner($size: 24px) {
+  width: $size;
+  height: $size;
+  border: 2px solid rgba($tiger-text-secondary, 0.2);
+  border-top-color: $tiger-primary;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+// 价格颜色变化逻辑
+@mixin price-color($value) {
+  color: if($value >= 0, $tiger-up, $tiger-down);
+
+  &::before {
+    content: if($value >= 0, '↑ ', '↓ ');
+    font-family: $tiger-icon-font;
+  }
+}
+
+// 图表工具提示统一样式
+@mixin chart-tooltip {
+  background: $tiger-bg-tooltip !important;
+  border: 1px solid $tiger-border !important;
+  border-radius: 4px;
+  box-shadow: $tiger-shadow-tooltip;
+  color: $tiger-text-primary;
+  padding: 8px 12px;
+
+  .tooltip-title {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .tooltip-value {
+    font-family: $tiger-number-font;
+  }
+}
+
+// 响应式断点处理
+@mixin responsive($breakpoint) {
+  @if map-has-key($tiger-breakpoints, $breakpoint) {
+    @media #{map-get($tiger-breakpoints, $breakpoint)} {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+// 滚动条样式统一
+@mixin scrollbar-style {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($tiger-bg-scrollbar-track, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $tiger-bg-scrollbar-thumb;
+    border-radius: 3px;
+
+    &:hover {
+      background: darken($tiger-bg-scrollbar-thumb, 10%);
+    }
+  }
+}
+
+// 数字字体应用
+@mixin number-font {
+  font-family: $tiger-number-font;
+  font-feature-settings: 'tnum';
+  font-variant-numeric: tabular-nums;
+}
+
+// K线图表通用容器
+@mixin chart-container {
+  background: $tiger-bg-chart;
+  border: 1px solid $tiger-border-chart;
+  border-radius: 4px;
+  position: relative;
+
+  .chart-header {
+    padding: 12px;
+    border-bottom: 1px solid $tiger-border;
+    @include flex-center(row, space-between);
+  }
+
+  .chart-canvas {
+    height: 500px;
+    width: 100%;
+  }
+}
+
+// 动效过渡
+@mixin transition($properties: all, $duration: 0.2s, $easing: ease-in-out) {
+  transition-property: $properties;
+  transition-duration: $duration;
+  transition-timing-function: $easing;
+}

@@ -1,0 +1,28 @@
+// 覆盖ECharts默认样式
+.echarts-tooltip {
+  background: rgba(30, 34, 45, 0.95) !important;
+  border: 1px solid #3a3f4b !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+
+  .tooltip-title {
+    color: #f6465d !important;
+    font-weight: bold;
+  }
+
+  .tooltip-item {
+    span:first-child {
+      color: #7f848e !important;
+    }
+    span:last-child {
+      color: #e8e8e8 !important;
+    }
+  }
+}
+
+.echarts-axis-label {
+  color: #7f848e !important;
+}
+
+.echarts-grid line {
+  stroke: #2a2e3a !important;
+}
