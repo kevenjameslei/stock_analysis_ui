@@ -134,7 +134,15 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     // Worker 配置
     worker: {
       format: 'es',
-      plugins: () => [vue()], // 改为函数形式返回数组
+      plugins: () => [
+        vue({
+          template: {
+            compilerOptions: {
+              isCustomElement: (tag) => tag.startsWith('trading-vue'),
+            },
+          },
+        }),
+      ],
     },
 
     // 优化依赖
