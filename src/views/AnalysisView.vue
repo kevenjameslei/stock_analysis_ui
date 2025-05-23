@@ -75,7 +75,7 @@ const activeIndicators = ref(['MA5', 'MA10', 'VOL']) // 默认指标
 const showIndicatorPanel = ref(false)
 const chartArea = ref(null)
 const isFullscreen = ref(false)
-const lastPrice = ref(0)
+const _lastPrice = ref(0)
 const isMobile = ref(window.innerWidth < 768)
 
 // 计算属性
@@ -101,7 +101,7 @@ const handleTimeframeChange = (tf) => {
   stockStore.fetchKLineData(currentSymbol.value, tf)
 }
 
-const handleChartReady = (chartInstance) => {
+const handleChartReady = (_chartInstance) => {
   // 初始化WebSocket
   connect()
   send({

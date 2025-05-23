@@ -5,7 +5,7 @@ import { generateKLineData } from '@/utils/mock/kline'
 import { useWebSocket } from './useWebSocket'
 
 export function useChartData(symbol, timeframe) {
-  const store = useChartStore()
+  const _store = useChartStore()
   const loading = ref(false)
   const error = ref(null)
   const klineData = ref([])

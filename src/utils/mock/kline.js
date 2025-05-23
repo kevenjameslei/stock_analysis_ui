@@ -79,7 +79,7 @@ export function generateKLineData(options = {}) {
 export function generateTimeShareData(baseData) {
   const dayData = baseData || generateKLineData({ timeframe: '1d', count: 30 })
 
-  return dayData.flatMap((daily, index) => {
+  return dayData.flatMap((daily, _index) => {
     const [timestamp, open] = daily
     const dayTrend = daily[2] - daily[1] // 当日涨跌
 

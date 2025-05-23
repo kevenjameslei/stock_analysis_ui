@@ -62,7 +62,7 @@ export const useStockStore = defineStore('stock', {
   actions: {
     // 初始化实时数据连接
     async initialize() {
-      const { connect, subscribe } = useWebSocket({
+      const { connect, _subscribe } = useWebSocket({
         urlBuilder: () => 'wss://api.example.com/market-data',
         onMessage: this.handleMarketDataUpdate,
       })

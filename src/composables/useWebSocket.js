@@ -35,7 +35,9 @@ export function useWebSocket(options) {
     ws.value.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data)
-        validateDataFormat(data) && onMessage(data)
+        if (validateDataFormat(data)) {
+          onMessage(data)
+        }
       } catch (error) {
         handleError(new Error(`消息解析失败: ${error.message}`))
       }
@@ -100,7 +102,9 @@ export function useWebSocket(options) {
 
   // 错误处理
   const handleError = (error) => {
-    onError?.(error)
+    if (onError) {
+      onError(error)
+    }
     console.error('[WebSocket Error]', error)
   }
 

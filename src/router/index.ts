@@ -1,23 +1,41 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { setupGuards } from './guards'
+
+// 异步组件加载
+const Home = () => import('@/views/HomeView.vue')
+const Analysis = () => import('@/views/AnalysisView.vue')
+const Login = () => import('@/views/LoginView.vue')
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
+    meta: { title: '首页' },
+  },
+  {
+    path: '/analysis',
+    name: 'Analysis',
+    component: Analysis,
+    meta: { title: '行情分析', requiresAuth: true },
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: { title: '登录' },
+  },
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-    },
-  ],
+  history: createWebHistory(),
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  },
 })
+
+// 挂载守卫（包括标题、权限、数据预取）
+setupGuards(router)
 
 export default router
